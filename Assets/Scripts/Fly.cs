@@ -12,6 +12,8 @@ public class Fly : MonoBehaviour
 
     private Rigidbody2D _rb;
 
+    private Animator _animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,8 @@ public class Fly : MonoBehaviour
         // we save the actual bird rigidBody inside > _rb
 
         _rb = GetComponent<Rigidbody2D>();
+
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -36,5 +40,12 @@ public class Fly : MonoBehaviour
         }
 
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        _animator.Play("Death", -1, 0f);
+
+        GameManager.Instance.GameOver();
     }
 }
