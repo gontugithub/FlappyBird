@@ -13,6 +13,8 @@ public class Fly : MonoBehaviour
     private Rigidbody2D _rb;
 
     private Animator _animator;
+    public AudioClip deathAudioClip;
+    public AudioClip flyAudioClip;
 
     // Start is called before the first frame update
     void Start()
@@ -34,9 +36,7 @@ public class Fly : MonoBehaviour
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             _rb.velocity = Vector2.up * _velocity;
-        }
-        {
-
+            AudioManager.instance.PlayAudio(flyAudioClip, "WingsSwing");
         }
 
 
@@ -44,8 +44,9 @@ public class Fly : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _animator.Play("Death", -1, 0f);
 
+        AudioManager.instance.PlayAudio(deathAudioClip, "Death");
+        _animator.Play("Death", -1, 0f);
         GameManager.Instance.GameOver();
     }
 }
