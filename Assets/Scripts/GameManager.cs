@@ -26,6 +26,22 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
+    public void ChangeSceneLobby()
+    {
+        SceneManager.LoadScene("Lobby");
+    }
+
+    public void ChangeSceneMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void ChangeCredits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
+
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
