@@ -14,7 +14,8 @@ public class Fly : MonoBehaviour
 
     private Animator _animator;
     public AudioClip deathAudioClip;
-    public AudioClip flyAudioClip;
+
+    public Interstitial _adManager;
 
     // Start is called before the first frame update
     void Start()
@@ -25,28 +26,49 @@ public class Fly : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
 
         _animator = GetComponent<Animator>();
+
+        _adManager = FindObjectOfType<Interstitial>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        // when we click the left click, we add velocity to the vector up, so goes up
-
+        // Detecta clic del ratón, tecla de espacio o toque en pantalla
+#if UNITY_STANDALONE || UNITY_EDITOR
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             _rb.velocity = Vector2.up * _velocity;
-            AudioManager.instance.PlayAudio(flyAudioClip, "WingsSwing");
         }
-
-
+#elif UNITY_ANDROID || UNITY_IOS
+    if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+    {
+        _rb.velocity = Vector2.up * _velocity;
+    }
+#endif
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
+
+
         AudioManager.instance.PlayAudio(deathAudioClip, "Death");
         _animator.Play("Death", -1, 0f);
+   
         GameManager.Instance.GameOver();
+
+
+
+        if (GameManager.Instance != null)
+        {
+            Debug.Log($"asdasdasd");
+            GameManager.Instance.IncrementLifeCount();
+            Debug.Log($"Hpñaaaaaaa");
+
+        }
+        else
+        {
+            Debug.LogError("GameManager.Instance es null. Asegúrate de que GameManager está en la escena.");
+        }
     }
 }

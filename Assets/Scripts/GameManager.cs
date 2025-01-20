@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]private GameObject _gameOverGame;
 
+    public int LifeCount { get; private set; }
+
     private void Awake()
     {
         if (Instance == null)
@@ -45,6 +47,19 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void IncrementLifeCount()
+    {
+        LifeCount++;
+        Debug.Log($"LifeCount incrementado: {LifeCount}");
+
+        if (LifeCount >= 3)
+        {
+            LifeCount = 0;
+            Debug.Log("Mostrando anuncio...");
+            FindObjectOfType<Interstitial>().ShowAd(); // Llama al AdManager para mostrar el anuncio
+        }
     }
 
 }
