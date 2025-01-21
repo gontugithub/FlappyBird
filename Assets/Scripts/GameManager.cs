@@ -49,17 +49,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void IncrementLifeCount()
-    {
-        LifeCount++;
-        Debug.Log($"LifeCount incrementado: {LifeCount}");
-
-        if (LifeCount >= 3)
-        {
-            LifeCount = 0;
-            Debug.Log("Mostrando anuncio...");
-            FindObjectOfType<Interstitial>().ShowAd(); // Llama al AdManager para mostrar el anuncio
-        }
-    }
+ 
 
 }

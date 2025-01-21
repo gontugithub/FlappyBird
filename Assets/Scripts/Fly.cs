@@ -54,21 +54,8 @@ public class Fly : MonoBehaviour
 
         AudioManager.instance.PlayAudio(deathAudioClip, "Death");
         _animator.Play("Death", -1, 0f);
-   
+        FindObjectOfType<Interstitial>().ShowAd(); // Llama al AdManager para mostrar el
+
         GameManager.Instance.GameOver();
-
-
-
-        if (GameManager.Instance != null)
-        {
-            Debug.Log($"asdasdasd");
-            GameManager.Instance.IncrementLifeCount();
-            Debug.Log($"Hpñaaaaaaa");
-
-        }
-        else
-        {
-            Debug.LogError("GameManager.Instance es null. Asegúrate de que GameManager está en la escena.");
-        }
     }
 }
